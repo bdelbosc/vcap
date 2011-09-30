@@ -46,6 +46,10 @@ nuxeo.db.user=<%= db_user %>
 nuxeo.db.password=<%= db_password %>
 nuxeo.db.host=<%= db_host %>
 nuxeo.db.port=<%= db_port %>
+# activate cluster mode, binaries are not persisted at the moment
+repository.clustering.enabled=true
+repository.clustering.delay=2000
+repository.binary.store=${nuxeo.data.dir}/binaries
 <% else %>
 nuxeo.templates=default
 <% end %>
