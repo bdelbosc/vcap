@@ -45,7 +45,7 @@ nuxeo.db.name=<%= db_name %>
 nuxeo.db.user=<%= db_user %>
 nuxeo.db.password=<%= db_password %>
 nuxeo.db.host=<%= db_host %>
-nuxeo.db.port=TCATPORT
+nuxeo.db.port=<%= db_port %>
 <% else %>
 nuxeo.templates=default
 <% end %>

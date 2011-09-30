@@ -32,7 +32,7 @@ class NuxeoPlugin < StagingPlugin
     FileUtils.mkdir_p File.join(destination_directory, 'logs')
   end
 
-  # Overriden to kill all children of the parent group
+  # Overriden to kill all descendants
   def generate_startup_script(env_vars = {})
     after_env_before_script = block_given? ? yield : "\n"
     template = <<-SCRIPT

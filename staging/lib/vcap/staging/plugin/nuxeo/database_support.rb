@@ -6,7 +6,7 @@ module NuxeoDatabaseSupport
     when 0
       empty_config
     else
-      database_config_for(binding)
+      database_config_for(bindings.first)
     end
   end
 
