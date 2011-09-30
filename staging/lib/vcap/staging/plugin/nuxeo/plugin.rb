@@ -44,8 +44,9 @@ class NuxeoPlugin < StagingPlugin
 STARTED=$!
 echo "$STARTED" >> ../run.pid
 echo "#!/bin/bash" >> ../stop
-echo "kill -9 -$STARTED" >> ../stop
-echo "kill -9 -$PPID" >> ../stop
+echo "killtree() { local _pid=\\$1; for _child in \\$(ps -o pid --no-headers --ppid \\${_pid}); do killtree \\${_child}; done; kill -9 \\${_pid}; }" >> ../stop
+echo "killtree $STARTED" >> ../stop
+echo "killtree $PPID" >> ../stop
 chmod 755 ../stop
 wait $STARTED
     SCRIPT
