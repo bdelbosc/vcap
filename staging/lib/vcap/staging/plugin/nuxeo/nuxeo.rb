@@ -39,7 +39,7 @@ nuxeo.bind.address=TCATHOST
 nuxeo.server.http.port=TCATPORT
 nuxeo.url=http://FQDN/nuxeo
 nuxeo.loopback.url=http://TCATHOST:TCATPORT/nuxeo
-<% if (nx_template == 'postgres') %>
+<% if (nx_template == 'postgresql') %>
 nuxeo.templates=postgresql
 nuxeo.db.name=<%= db_name %>
 nuxeo.db.user=<%= db_user %>
@@ -50,7 +50,7 @@ nuxeo.db.port=TCATPORT
 nuxeo.templates=default
 <% end %>
 ERB
-    ret = ERB.new(template)
+    ERB.new(template).result(binding)
   end
 
 end

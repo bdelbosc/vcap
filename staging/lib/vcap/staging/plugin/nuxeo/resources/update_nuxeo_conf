@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 tomcat_port = ARGV[0]
 tomcat_host = ARGV[1]
-fqdn = ARGV[3]
+fqdn = ARGV[2]
 exit 1 unless tomcat_port && tomcat_host && fqdn
 
-NUXEO_CONF = "nuxeo/conf/nuxeo.conf"
+NUXEO_CONF = "nuxeo/bin/nuxeo.conf"
 content = File.read(NUXEO_CONF)
 
 File.open(NUXEO_CONF, "w") {
