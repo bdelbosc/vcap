@@ -3,6 +3,8 @@ require 'fileutils'
 require 'erb'
 
 class Nuxeo
+  NUXEO_BINARIES_PATH = '/var/lib/nuxeo'
+
   def self.resource_dir
     File.join(File.dirname(__FILE__), 'resources')
   end
@@ -18,6 +20,8 @@ class Nuxeo
   end
 
   def self.nuxeo_conf(conf)
+    # TODO: find a way to configure this
+    nuxeo_binaries = NUXEO_BINARIES_PATH
     nx_template = conf['template']
     jvm_mem = conf['jvm_mem']
     db_host = conf['host']
@@ -25,6 +29,7 @@ class Nuxeo
     db_user = conf['username']
     db_password = conf['password']
     db_name = conf['database']
+    # Note that TCATPORT, APPNAME will be replaced at launch time
     template = <<-ERB
 JAVA_OPTS=-Xms<%= jvm_mem %>m -Xmx<%= jvm_mem %>m -XX:MaxPermSize=512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Dfile.encoding=UTF-8
 # Enable gc log
@@ -35,10 +40,10 @@ launcher.override.java.tmpdir=false
 # disable ajp and admin port
 nuxeo.server.ajp.port=-1
 nuxeo.server.tomcat-admin.port=-1
-nuxeo.bind.address=TCATHOST
+# TCATHOST
+nuxeo.bind.address=127.0.0.1
 nuxeo.server.http.port=TCATPORT
-nuxeo.url=http://FQDN/nuxeo
-nuxeo.loopback.url=http://TCATHOST:TCATPORT/nuxeo
+nuxeo.loopback.url=http://127.0.0.1:TCATPORT/nuxeo
 <% if (nx_template == 'postgresql') %>
 nuxeo.templates=postgresql
 nuxeo.db.name=<%= db_name %>
@@ -49,7 +54,8 @@ nuxeo.db.port=<%= db_port %>
 # activate cluster mode, binaries are not persisted at the moment
 repository.clustering.enabled=true
 repository.clustering.delay=2000
-repository.binary.store=${nuxeo.data.dir}/binaries
+nuxeo.data.dir=<%= nuxeo_binaries %>/APPNAME
+repository.binary.store=<%= nuxeo_binaries %>/APPNAME/binaries
 <% else %>
 nuxeo.templates=default
 <% end %>

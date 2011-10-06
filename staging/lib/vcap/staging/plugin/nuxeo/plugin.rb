@@ -83,7 +83,7 @@ if [ $PORT -lt 0 ] ; then
   exit 1
 fi
 # TODO: fix hard coded fqdn
-  ruby resources/update_nuxeo_conf $PORT $VCAP_APP_HOST ${VMC_APP_NAME}.vcap.me
+  ruby resources/update_nuxeo_conf $PORT $VCAP_APP_HOST $VMC_APP_NAME
       NUXEOF
     end
   end
